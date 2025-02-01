@@ -1,2 +1,0 @@
-# escriptures
-Les Escriptures
