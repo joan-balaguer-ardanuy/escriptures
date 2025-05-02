@@ -3,9 +3,9 @@ package escriptures.nombres;
 import java.util.Iterator;
 
 public interface Enumerador<E> extends Iterator<E> {
-	E anterior();
+	E següent();
 	boolean continuar();
-	void rentar();
+	void deslliurar();
 	
 	@Override
 	default boolean hasNext() {
@@ -13,10 +13,10 @@ public interface Enumerador<E> extends Iterator<E> {
 	}
 	@Override
 	default E next() {
-		return anterior();
+		return següent();
 	}
 	@Override
 	default void remove() {
-		rentar();
+		deslliurar();
 	}
 }

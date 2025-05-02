@@ -2,8 +2,7 @@ package escriptures.nombres;
 
 import java.io.Serial;
 
-public class Llinatge<E> extends Clan<E> implements Cua<E> {
-
+public class Llinatge<E> extends Clan<E> implements Pila<E> {
 	@Serial
 	private static final long serialVersionUID = 1968215605104236500L;
 
@@ -14,10 +13,9 @@ public class Llinatge<E> extends Clan<E> implements Cua<E> {
 		super(cap, membre);
 	}
 	@Override
-	public Cua<E> afegir(E e) {
-		if(cercar(e) == null) {
-			return new Llinatge<>(this, e);
+	public void afegir(E e) {
+		if(!tenir(e)) {
+			 new Llinatge<>(this, e);
 		}
-		else return null;
 	}
 }

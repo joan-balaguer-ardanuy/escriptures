@@ -1,7 +1,8 @@
 package escriptures.gènesi;
 
-import escriptures.Anyell;
+import escriptures.Entrada;
+import escriptures.nombres.Diccionari;
 
-public interface Sang<K,V> extends Anyell<K,V> {
-
+public interface Sang<K,V> extends Entrada<K,V>, Diccionari<K,V> {
+	
 }

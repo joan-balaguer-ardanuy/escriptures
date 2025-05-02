@@ -1,8 +1,6 @@
 package escriptures.temps;
 
-public interface Poder<V> {
-
-	boolean redimirFill(V fill);
-	boolean sotmetreFill(V fill);
-	boolean contéFill(V fill);
+public interface Poder<V> extends Després<V> {
+	V laSobirana();
+	V laSobirana(V fill);
 }

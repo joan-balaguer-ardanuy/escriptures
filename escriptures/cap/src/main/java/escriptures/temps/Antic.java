@@ -1,12 +1,8 @@
 package escriptures.temps;
 
-import escriptures.nombres.Enumerable;
+import java.io.Serializable;
 
-public interface Antic<K> extends Enumerable<K> {
-
-	K pare();
-	K pare(K pare);
-
-	boolean ésBuit();
-	void rentar();
+public interface Antic<K> extends Iterable<K>, Serializable {
+	K elPare();
+	K elPare(K pare);
 }

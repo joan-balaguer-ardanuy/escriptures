@@ -1,7 +1,9 @@
 package escriptures.temps;
 
 public interface Abans<K> extends Antic<K> {
+	K elPassat();
+	K elPassat(K passat);
 	
-	K passat();
-	K passat(K passat);
+	void rentar();
+	boolean buit();
 }

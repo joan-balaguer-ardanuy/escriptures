@@ -1,17 +1,14 @@
 package escriptures;
 
-import java.io.Serializable;
+import escriptures.nombres.Element;
+import escriptures.nombres.Enumerable;
+import escriptures.temps.Regne;
 
-import escriptures.temps.Antic;
+public interface Nombre<N> 
+	extends Regne<Nombre<N>>, Element<N>, Enumerable<N> {
 
-public interface Nombre<E> 
-	extends Antic<Nombre<E>>, Serializable {
-
-	E element();
-	E element(E element);
-
-	Nombre<E> cercar(E element);
-	Nombre<E> afegir(E element);
-	
-	boolean rentar(E element);
+	Nombre<N> obtenir(N membre);
+	Nombre<N> establir(N membre);
+	Nombre<N> rentar(N membre);
+	boolean tenir(N membre);
 }

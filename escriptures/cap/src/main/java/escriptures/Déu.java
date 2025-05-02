@@ -2,8 +2,6 @@ package escriptures;
 
 import java.io.Serial;
 
-import escriptures.nombres.Enumerador;
-
 public abstract class Déu implements Testimoni {
 	@Serial
 	private static final long serialVersionUID = 1082537671732028590L;
@@ -31,21 +29,6 @@ public abstract class Déu implements Testimoni {
 	public void paritat(Gènere paritat) {
 		this.paritat = paritat;
 	}
-	
-	@Override
-	public void afegirTestimoni(Testimoni testimoni) {
-		if(testimonis == null) {
-			testimonis = new Tribunal(testimoni);
-		}
-		testimonis.afegir(testimoni);
-	}
-	@Override
-	public void alliberarTestimoni(Testimoni testimoni) {
-		if(testimonis == null) {
-			return;
-		}
-		testimonis.rentar(testimoni);
-	}
 
 	public Déu() {
 		this.ordre = Precepte.GÈNESI;
@@ -57,7 +40,14 @@ public abstract class Déu implements Testimoni {
 	}
 
 	@Override
-	public Testimoni donarTestimoni() {
+	public void afegirTestimoni(Testimoni testimoni) {
+		if(testimonis == null) {
+			testimonis = new Tribunal(testimoni);
+		}
+		testimonis.establir(testimoni);
+	}
+	@Override
+	public Testimoni declarar() {
 		try {
 			Testimoni testimoni = getClass().getConstructor().newInstance();
 			testimoni.paritat(paritat);
@@ -68,9 +58,8 @@ public abstract class Déu implements Testimoni {
 	}
 	protected void donarTestimoni(Fet e) {
 		if(testimonis != null) {
-			Enumerador<Nombre<Testimoni>> iterator = testimonis.enumerador();
-			while(iterator.hasNext()) {
-				iterator.next().element().testimoniatge(this, e);
+			for(Nombre<Testimoni> testimoni : testimonis) {
+			 	testimoni.element().testimoniatge(this, e);
 			}
 		}
 	}
@@ -80,44 +69,24 @@ public abstract class Déu implements Testimoni {
 	}
 
 	public class Tribunal extends Testament<Testimoni> {
-
 		@Serial
 		private static final long serialVersionUID = -263086116387761309L;
-
-		Testimoni testimoni;
 		
-		@Override
-		public Testimoni element() {
-			return testimoni;
+		protected Tribunal(Testimoni testimoni) {
+			super(testimoni);
+		}
+		protected Tribunal(Nombre<Testimoni> jutge, Testimoni testimoni) {
+			super(jutge, testimoni);
 		}
 		@Override
-		public Testimoni element(Testimoni nou) {
-			Testimoni antic = this.testimoni;
-			this.testimoni = nou;
-			return antic;
-		}
-		
-		protected Tribunal(Testimoni testament) {
-			super();
-			this.testimoni = testament;
-		}
-		protected Tribunal(Tribunal jutge, Testimoni testimoni) {
-			super(jutge);
-			this.testimoni = testimoni;
-		}
-		@Override
-		public Tribunal afegir(Testimoni testimoni) {
-			if(this.testimoni == null) {
-				this.testimoni = testimoni;
-				return null;
-			}
-			return new Tribunal(this, testimoni);
+		public Nombre<Testimoni> establir(Testimoni testimoni) {
+			return new Tribunal(testimonis, testimoni);
 		}
 	}
 	
 	/**
 	 * Crea nova instància d'objecte de <tt>java.lang.Class&lt;X&gt;</tt>.
-	 * @param <X> el tipus anònim de l'objecte retornat
+	 * @param <X> el tipus de l'objecte retornat
 	 * @param classe la {@link Class} de l'objecte.
 	 * @param arguments els objectes durant la construcció de la instància
 	 * @return la nova instància&lt;X&gt;
