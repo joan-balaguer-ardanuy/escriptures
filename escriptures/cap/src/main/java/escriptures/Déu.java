@@ -4,7 +4,7 @@ import java.io.Serial;
 
 public abstract class Déu implements Testimoni {
 	@Serial
-	private static final long serialVersionUID = 1082537671732028590L;
+	private static final long serialVersionUID = 7L;
 	
 	private int ordre;
 	private Gènere paritat;
@@ -20,6 +20,7 @@ public abstract class Déu implements Testimoni {
 	@Override
 	public void manament(int ordre) {
 		this.ordre = ordre;
+		donarTestimoni(new Fet(this));
 	}
 	@Override
 	public Gènere paritat() {
@@ -67,8 +68,19 @@ public abstract class Déu implements Testimoni {
 	public void testimoniatge(Testimoni font, Fet argument) {
 		donarTestimoni(argument);
 	}
+	@Override
+	public void run() {
+		switch (manament()) {
+		case Precepte.VIDA:
+			manament(Precepte.MORT);
+			break;
+		default:
+			manament(Precepte.VIDA);
+			break;
+		}
+	}
 
-	public class Tribunal extends Testament<Testimoni> {
+	private class Tribunal extends Testament<Testimoni> {
 		@Serial
 		private static final long serialVersionUID = -263086116387761309L;
 		
@@ -80,7 +92,7 @@ public abstract class Déu implements Testimoni {
 		}
 		@Override
 		public Nombre<Testimoni> establir(Testimoni testimoni) {
-			return new Tribunal(testimonis, testimoni);
+			return new Tribunal(this, testimoni);
 		}
 	}
 	

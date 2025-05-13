@@ -8,11 +8,6 @@ public enum Gènere {
 	HERMA;
 	
 	/**
-	 * L'aleatorietat.
-	 */
-	private static Random alea = new Random();
-	
-	/**
 	 * Retorna el gènere oposat a aquest.
 	 * @return el gènere oposat a aquest
 	 */
@@ -25,17 +20,17 @@ public enum Gènere {
 	}
 	
 	/**
+	 * L'aleatorietat.
+	 */
+	private static Random alea = new Random();
+	
+	/**
 	 * Retorna qualsevol gènere aleatòria.
 	 * @return qualsevol gènere de manera aleatòria
 	 */
 	public static Gènere qualsevol() {
-		switch (alea.nextInt(3)) {
-		case 0:
+		if(alea.nextBoolean())
 			return MASCLE;
-		case 1:
-			return FEMELLA;
-		default:
-			return HERMA;
-		}
+		else return FEMELLA;
 	}
 }

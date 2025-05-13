@@ -6,7 +6,7 @@ public class Fet implements Testimoni {
 	@Serial
 	private static final long serialVersionUID = 7515334054137685548L;
 	
-	Testimoni font;
+	private Testimoni font;
 
 	public Testimoni font() {
 		return font;

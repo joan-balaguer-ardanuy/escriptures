@@ -10,7 +10,11 @@ public class Nom extends Fill<Integer,Character> {
 
 	@Override
 	public String nom() {
-		return null;
+		StringBuilder nom = new StringBuilder();
+		for(Entrada<Integer,Character> entrada : this) {
+			nom.append(entrada.elValor());
+		}
+		return nom.toString();
 	}
 
 	public Nom() {
@@ -19,8 +23,8 @@ public class Nom extends Fill<Integer,Character> {
 	public Nom(Gènere paritat) {
 		super(paritat);
 	}
-	public Nom(Gènere paritat, Integer clau, Character valor) {
-		super(Paraula.class, paritat, clau, valor);
+	public Nom(Integer clau, Character valor) {
+		super(Paraula.class, Gènere.qualsevol(), clau, valor);
 	}
 	public Nom(Nom pare) {
 		super(pare);
@@ -36,11 +40,16 @@ public class Nom extends Fill<Integer,Character> {
 	}
 
 	@Override
-	public int compareTo(Entrada<Character, Integer> o) {
+	public int compareTo(Entrada<Character,Integer> o) {
 		return 0;
 	}
 	@Override
 	public void run() {
-		
+		try {
+			Thread.sleep(laClau());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		super.run();
 	}
 }

@@ -17,8 +17,8 @@ public class Omega extends Fill<Carta, Llibre> {
 	public Omega(Gènere paritat) {
 		super(paritat);
 	}
-	public Omega(Gènere paritat, Carta clau, Llibre valor) {
-		super(Alfa.class, paritat, clau, valor);
+	public Omega(Carta clau, Llibre valor) {
+		super(Alfa.class, Gènere.qualsevol(), clau, valor);
 	}
 	public Omega(Omega pare) {
 		super(pare);
@@ -34,11 +34,14 @@ public class Omega extends Fill<Carta, Llibre> {
 	}
 
 	@Override
-	public int compareTo(Entrada<Llibre, Carta> o) {
+	public int compareTo(Entrada<Llibre,Carta> o) {
 		return 0;
 	}
 	@Override
 	public void run() {
-		
+		for(Runnable entrada : laClau()) {
+			entrada.run();
+		}
+		super.run();
 	}
 }

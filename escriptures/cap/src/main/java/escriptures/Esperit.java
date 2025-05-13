@@ -20,6 +20,6 @@ public interface Esperit<K,V>
 	Gènesi<K,V> membre();
 	
 	public interface Gènesi<K,V> {
-		int reproduir(K pare, V fill);
+		int procrear(K pare, V fill);
 	}
 }

@@ -51,7 +51,7 @@ public abstract class Fill<V,K>
 	}
 	@Override
 	public void afegir(Entrada<V,K> anyell) {
-		afegirPare(anyell, anyell.elFill());
+		recórrerPare(anyell, anyell.elFill());
 	}
 	@Override
 	public void eliminar(Entrada<V,K> anyell) {

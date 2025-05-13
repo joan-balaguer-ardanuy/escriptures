@@ -44,7 +44,6 @@ public interface Entrada<K,V>
     interface Comparador<K,V> 
     	extends Genital<Entrada<K,V>,Entrada<V,K>> {
     	
-    	void establirPare(K clau, V valor);
-    	void establirFill(V clau, K valor);
+    	void posar(K clau, V valor);
     }
 }

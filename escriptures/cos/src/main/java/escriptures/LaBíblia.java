@@ -10,7 +10,11 @@ public class LaBíblia extends Pare<Alfa,Omega> {
 
 	@Override
 	public String nom() {
-		return null;
+		StringBuilder nom = new StringBuilder();
+		for(Entrada<Alfa,Omega> entrada : entrada()) {
+			nom.append(entrada.nom());
+		}
+		return nom.toString();
 	}
 
 	public LaBíblia() {
@@ -19,8 +23,8 @@ public class LaBíblia extends Pare<Alfa,Omega> {
 	public LaBíblia(Gènere paritat) {
 		super(paritat);
 	}
-	public LaBíblia(Gènere paritat, Alfa clau, Omega valor) {
-		super(Escriptures.class, paritat, clau, valor);
+	public LaBíblia(Alfa clau, Omega valor) {
+		super(Escriptures.class, Gènere.qualsevol(), clau, valor);
 	}
 	public LaBíblia(LaBíblia pare) {
 		super(pare);
@@ -41,6 +45,9 @@ public class LaBíblia extends Pare<Alfa,Omega> {
 	}
 	@Override
 	public void run() {
-		
+		for(Runnable entrada : laClau()) {
+			entrada.run();
+		}
+		super.run();
 	}
 }

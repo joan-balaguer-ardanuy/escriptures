@@ -86,16 +86,19 @@ public abstract class EsperitSant
 	}
 	
 	@Override
+	public abstract Gènesi<K,V> membre();
+	
+	@Override
+	public boolean buit() {
+		return elPare() == this;
+	}
+	@Override
 	public void rentar() {
 		elPassat().elPare(elPare());
 		elFutur().elPare(elPare().elFill());
 		elPassat(elPare().elPassat(elPassat()));
 		elFill().elPare(elFill());
 		elPare(elPassat());
-	}
-	@Override
-	public boolean buit() {
-		return elPare() == this;
 	}
 	@Override
 	public boolean tenirPare(K pare) {
@@ -111,18 +114,35 @@ public abstract class EsperitSant
 		return elFill().tenirPare(fill);
 	}
 	@Override
+	public void execute(Runnable command) {
+		try {
+			new Thread(command).start();
+		}
+		catch (Throwable t) {
+			throw new Error(t);
+		}
+	}
+	@Override
+	public void run() {
+		if(!buit()) {
+			execute(elFill());
+		}
+		super.run();
+	}
+	
+	@Override
 	public Iterator<K> iterator() {
-		return new Iterador(pare);
+		return new Iterador(elPassat());
 	}
 	
 	protected final class Iterador implements java.util.Iterator<K> {
 		private K recurrent;
-		private K pare;
+		private K passat;
 		private boolean seguir;
 		
 		Iterador(K pare) {
-			pare = recurrent = pare;
-			seguir = true;
+			this.passat = recurrent = pare;
+			this.seguir = true;
 		}
 		@Override
 		public boolean hasNext() {
@@ -130,8 +150,8 @@ public abstract class EsperitSant
 		}
 		@Override
 		public K next() {
-			recurrent = pare;
-			pare = recurrent.elPare();
+			recurrent = passat;
+			passat = passat.elPassat();
 			if (recurrent == EsperitSant.this) {
 				seguir = false;
 			} else seguir = true;
@@ -141,15 +161,8 @@ public abstract class EsperitSant
 		public void remove() {
 			recurrent.rentar();
 			if (!recurrent.buit()) {
-				pare = recurrent.elPare();
+				passat = recurrent.elPassat();
 			} else seguir = false;
 		}
-	}
-	@Override
-	public abstract Gènesi<K,V> membre();
-	
-	@Override
-	public void execute(Runnable command) {
-		// Ah, ah, ah...!	
 	}
 }

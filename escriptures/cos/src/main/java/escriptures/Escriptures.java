@@ -8,7 +8,11 @@ public class Escriptures extends Fill<Omega,Alfa> {
 
 	@Override
 	public String nom() {
-		return null;
+		StringBuilder nom = new StringBuilder();
+		for(Entrada<Omega,Alfa> entrada : this) {
+			nom.append(entrada.nom());
+		}
+		return nom.toString();
 	}
 
 	public Escriptures() {
@@ -17,8 +21,8 @@ public class Escriptures extends Fill<Omega,Alfa> {
 	public Escriptures(Gènere paritat) {
 		super(paritat);
 	}
-	public Escriptures(Gènere paritat, Omega clau, Alfa valor) {
-		super(LaBíblia.class, paritat, clau, valor);
+	public Escriptures(Omega clau, Alfa valor) {
+		super(LaBíblia.class, Gènere.qualsevol(), clau, valor);
 	}
 	public Escriptures(Escriptures pare) {
 		super(pare);
@@ -39,6 +43,9 @@ public class Escriptures extends Fill<Omega,Alfa> {
 	}
 	@Override
 	public void run() {
-		
+		for(Runnable entrada : laClau()) {
+			entrada.run();
+		}
+		super.run();
 	}
 }

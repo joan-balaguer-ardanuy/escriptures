@@ -19,8 +19,8 @@ public class Carta extends Fill<Salm,Passatge> {
 	public Carta(Gènere paritat) {
 		super(paritat);
 	}
-	public Carta(Gènere paritat, Salm clau, Passatge valor) {
-		super(Llibre.class, paritat, clau, valor);
+	public Carta(Salm clau, Passatge valor) {
+		super(Llibre.class, Gènere.qualsevol(), clau, valor);
 	}
 	public Carta(Carta pare) {
 		super(pare);
@@ -41,6 +41,9 @@ public class Carta extends Fill<Salm,Passatge> {
 	}
 	@Override
 	public void run() {
-		
+		for(Runnable entrada : laClau()) {
+			entrada.run();
+		}
+		super.run();
 	}
 }

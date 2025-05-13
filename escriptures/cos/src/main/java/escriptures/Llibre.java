@@ -10,7 +10,11 @@ public class Llibre extends Pare<Passatge,Salm> {
 
 	@Override
 	public String nom() {
-		return null;
+		StringBuilder nom = new StringBuilder();
+		for(Entrada<Passatge,Salm> entrada : entrada()) {
+			nom.append(entrada.nom());
+		}
+		return nom.toString();
 	}
 
 	public Llibre() {
@@ -19,8 +23,8 @@ public class Llibre extends Pare<Passatge,Salm> {
 	public Llibre(Gènere paritat) {
 		super(paritat);
 	}
-	public Llibre(Gènere paritat, Passatge clau, Salm valor) {
-		super(Carta.class, paritat, clau, valor);
+	public Llibre(Passatge clau, Salm valor) {
+		super(Carta.class, Gènere.qualsevol(), clau, valor);
 	}
 	public Llibre(Llibre pare) {
 		super(pare);
@@ -41,6 +45,9 @@ public class Llibre extends Pare<Passatge,Salm> {
 	}
 	@Override
 	public void run() {
-		
+		for(Runnable entrada : laClau()) {
+			entrada.run();
+		}
+		super.run();
 	}
 }

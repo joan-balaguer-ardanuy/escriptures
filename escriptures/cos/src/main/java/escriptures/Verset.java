@@ -10,7 +10,11 @@ public class Verset extends Pare<Paraula,Nom> {
 
 	@Override
 	public String nom() {
-		return null;
+		StringBuilder nom = new StringBuilder();
+		for(Entrada<Paraula,Nom> entrada : entrada()) {
+			nom.append(entrada.nom());
+		}
+		return nom.toString();
 	}
 	
 	public Verset() {
@@ -19,20 +23,20 @@ public class Verset extends Pare<Paraula,Nom> {
 	public Verset(Gènere paritat) {
 		super(paritat);
 	}
-	public Verset(Gènere paritat, Paraula clau, Nom valor) {
-		super(Litúrgia.class, paritat, clau, valor);
+	public Verset(Paraula clau, Nom valor) {
+		super(Capítol.class, Gènere.qualsevol(), clau, valor);
 	}
 	public Verset(Verset pare) {
 		super(pare);
 	}
 	public Verset(Verset pare, Paraula clau, Nom valor) {
-		super(Litúrgia.class, pare, clau, valor);
+		super(Capítol.class, pare, clau, valor);
 	}
 	public Verset(Verset senyor, Gènere paritat) {
 		super(senyor, paritat);
 	}
 	public Verset(Verset senyor, Gènere paritat, Paraula clau, Nom valor) {
-		super(Litúrgia.class, senyor, paritat, clau, valor);
+		super(Capítol.class, senyor, paritat, clau, valor);
 	}
 	
 	@Override
@@ -41,6 +45,9 @@ public class Verset extends Pare<Paraula,Nom> {
 	}
 	@Override
 	public void run() {
-		
+		for(Runnable entrada : laClau()) {
+			entrada.run();
+		}
+		super.run();
 	}
 }

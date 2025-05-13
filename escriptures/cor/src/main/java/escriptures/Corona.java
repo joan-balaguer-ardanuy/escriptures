@@ -70,7 +70,7 @@ public abstract class Corona
 	}
 
 	@Override
-	public void afegirPare(K pare, V fill) {
+	public void recórrerPare(K pare, V fill) {
 		pare.elPare(elPare());
 		fill.elPare(elFill().elPare());
 		fill.elFill(elPare().elPassat());
@@ -79,11 +79,11 @@ public abstract class Corona
 		elFill().elPare(fill);
 	}
 	@Override
-	public void afegirFill(V fill, K pare) {
-		fill.afegirPare(fill, pare);
+	public void recórrerFill(V fill, K pare) {
+		fill.recórrerPare(fill, pare);
 	}
 	@Override
-	public void sotmetrePare(K pare, V fill) {
+	public void concórrerPare(K pare, V fill) {
 		elPassat().elPare(pare);
 		elFutur().elPare(fill);
 		fill.elFill(elPassat());
@@ -92,12 +92,28 @@ public abstract class Corona
 		elPassat(pare);
 	}
 	@Override
-	public void sotmetreFill(V fill, K pare) {
-		fill.afegirPare(fill, pare);
+	public void concórrerFill(V fill, K pare) {
+		fill.recórrerPare(fill, pare);
 	}
 	@Override
-	public void permutarPare(K pare, V fill) {
-		if(pare == elPare()) {
+	public V posarFill(K pare, V fill) {
+		for(K recurrent : this)  {
+			if(recurrent == pare) {
+				fill.elPare(pare.elPare().elFill());
+				pare.elFutur().elPare(fill);
+				fill.elFill(pare.elPassat());
+				return pare.elFill(fill);
+			}
+		}
+		return null;
+	}
+	@Override
+	public K posarPare(V fill, K pare) {
+		return elFill().posarFill(fill, pare);
+	}
+	
+	public boolean permutarAntic(K pare, V fill) {
+		if(pare == elPare() && fill == elPare().elFill()) {
 			elPassat().elPare(pare);
 			elFutur().elPare(fill);
 			elPare(pare.elPare());
@@ -106,8 +122,16 @@ public abstract class Corona
 			elPassat(pare);
 			pare.elPare(elPare().elPassat());
 			fill.elPare(elFill());
+			return true;
 		}
-		else if(pare == elPassat()) {
+		return false;
+	}
+	@Override
+	public boolean permutarNou(V fill, K pare) {
+		return elFill().permutarAntic(fill, pare);
+	}
+	public boolean permutarAbans(K pare, V fill) {
+		if(pare == elPassat() && fill == elFutur()) {
 			pare.elPare(elPare());
 			fill.elPare(elFill().elPare());
 			elPassat(fill.elFill());
@@ -116,8 +140,21 @@ public abstract class Corona
 			fill.elFill(elPare().elPassat());
 			elPare(pare);
 			elFill().elPare(fill);
+			return true;
 		}
-		else {
+		return false;
+	}
+	@Override
+	public boolean permutarDesprés(V fill, K pare) {
+		return elFill().permutarAbans(fill, pare);
+	}
+	@Override
+	public void permutarPare(K pare, V fill) {
+		if(permutarAntic(pare, fill)) {
+			return;
+		} else if(permutarAbans(pare, fill)) {
+			return;
+		} else {
 			V valor = fill.elPare(elFill().elPare());
 			K clau = fill.elFill(elPassat());
 			valor.elFill(elPare().elPassat());
@@ -136,20 +173,20 @@ public abstract class Corona
 		elFill().permutarPare(fill, pare);
 	}
 	@Override
-	public V posarPare(K pare, V fill) {
-		for(K recurrent : this)  {
-			if(recurrent == pare) {
-				fill.elPare(pare.elPare().elFill());
-				pare.elFutur().elPare(fill);
-				fill.elFill(pare.elPassat());
-				return pare.elFill(fill);
-			}
-		}
-		return null;
+	public void permutarAntic() {
+		permutarAntic(elPare(), elPare().elFill());
 	}
 	@Override
-	public K posarFill(V fill, K pare) {
-		return elFill().posarPare(fill, pare);
+	public void permutarNou() {
+		elFill().permutarAntic();
+	}
+	@Override
+	public void permutarAbans() {
+		permutarAbans(elPassat(), elFutur());
+	}
+	@Override
+	public void permutarDesprés() {
+		elFill().permutarAbans();
 	}
 	
 	@Override
@@ -163,24 +200,32 @@ public abstract class Corona
 		/**
 		 * La sortida
 		 */
-		Vida<V,K> font;
+		Vida<K,V> font;
 		
 		@Override
-		public Vida<V,K> font() {
+		public Vida<K,V> font() {
 			return font;
 		}
 		
 		protected Reproductor() {
 			this.font = null;
 		}
-		protected Reproductor(Vida<V,K> font) {
+		protected Reproductor(Vida<K,V> font) {
 			this.font = font;
 		}
 		
 		@Override
-		public int reproduir(K pare, V mare) {
+		public int procrear(K pare, V fill) {
 			// Ah, ah, ah...!
 			return 0;
+		}
+		@Override
+		public void establirPare(K pare, V fill) {
+			// Ah, ah, ah...!
+		}
+		@Override
+		public void establirFill(V fill, K pare) {
+			// Ah, ah, ah...!
 		}
 	}
 }

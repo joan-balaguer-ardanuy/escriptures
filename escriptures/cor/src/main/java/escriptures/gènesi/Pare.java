@@ -36,7 +36,7 @@ public abstract class Pare<K,V>
 
 	@Override
 	public boolean tenirClau(K clau) {
-		for(Entrada<K,V> entrada : this) {
+		for(Entrada<K,V> entrada : entrada()) {
 			if(entrada.laClau() == clau) {
 				return true;
 			}
@@ -49,7 +49,7 @@ public abstract class Pare<K,V>
 	}
 	@Override
 	public V posar(K clau, V valor) {
-		for(Entrada<K,V> entrada : this) {
+		for(Entrada<K,V> entrada : entrada()) {
 			if(entrada.laClau() == clau) {
 				return entrada.elValor(valor);
 			}
@@ -59,7 +59,7 @@ public abstract class Pare<K,V>
 	}
 	@Override
 	public V cercarValor(K clau) {
-		for(Entrada<K,V> entrada : this) {
+		for(Entrada<K,V> entrada : entrada()) {
 			if(entrada.laClau() == clau) {
 				return entrada.elValor();
 			}
@@ -68,7 +68,7 @@ public abstract class Pare<K,V>
 	}
 	@Override
 	public K cercarClau(V valor) {
-		for(Entrada<K,V> entrada : this) {
+		for(Entrada<K,V> entrada : entrada()) {
 			if(entrada.elValor() == valor) {
 				return entrada.laClau();
 			}

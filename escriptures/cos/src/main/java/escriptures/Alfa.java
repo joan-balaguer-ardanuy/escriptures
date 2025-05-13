@@ -10,7 +10,11 @@ public class Alfa extends Pare<Llibre,Carta> {
 
 	@Override
 	public String nom() {
-		return null;
+		StringBuilder nom = new StringBuilder();
+		for(Entrada<Llibre,Carta> entrada : entrada()) {
+			nom.append(entrada.nom());
+		}
+		return nom.toString();
 	}
 	
 	public Alfa() {
@@ -19,8 +23,8 @@ public class Alfa extends Pare<Llibre,Carta> {
 	public Alfa(Gènere paritat) {
 		super(paritat);
 	}
-	public Alfa(Gènere paritat, Llibre clau, Carta valor) {
-		super(Omega.class, paritat, clau, valor);
+	public Alfa(Llibre clau, Carta valor) {
+		super(Omega.class, Gènere.qualsevol(), clau, valor);
 	}
 	public Alfa(Alfa pare) {
 		super(pare);
@@ -36,11 +40,14 @@ public class Alfa extends Pare<Llibre,Carta> {
 	}
 	
 	@Override
-	public int compareTo(Entrada<Carta, Llibre> o) {
+	public int compareTo(Entrada<Carta,Llibre> o) {
 		return 0;
 	}
 	@Override
 	public void run() {
-		
+		for(Runnable entrada : laClau()) {
+			entrada.run();
+		}
+		super.run();
 	}
 }

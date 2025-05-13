@@ -198,31 +198,25 @@ public abstract class Cel<K,V>
 	}
 	@Override
 	public Comparador<K,V> membre(K clau, V valor) {
-		comparador = new Òrgan(valor, clau);
-		return comparador;
+		return comparador = new Òrgan(clau, valor);
 	}
 	
 	/**
 	 * L'òrgan reproductor.
 	 */
-	protected class Òrgan extends Reproductor
+	class Òrgan extends Reproductor
 		implements Comparador<K,V> {
 		
-		protected Òrgan() {
+		Òrgan() {
 			super();
 		}
 		@SuppressWarnings("unchecked")
-		protected Òrgan(V clau, K valor) {
-			super(crear(elFill().getClass(), clau, valor));
-		}
-		
-		@Override
-		public void establirPare(K clau, V valor) {
-			// Ah, ah, ah...!
+		Òrgan(K clau, V valor) {
+			super(crear(elPare().getClass(), clau, valor));
 		}
 		@Override
-		public void establirFill(V clau, K valor) {
-			// Ah, ah, ah...!
+		public void posar(K clau, V valor) {
+			crear(elPare().getClass(), font(), clau, valor);
 		}
 	}
 }
